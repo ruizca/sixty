@@ -1,7 +1,7 @@
 # sixty
 A simple python wrapper for [SIXTE](https://www.sternwarte.uni-erlangen.de/research/sixte/index.php), a software package for X-ray telescope observation simulations.
 
-This module only works if a working installation of SIXTE and SIMPUT is available in your system. See the installation instructions in the [SIXTE website](https://www.sternwarte.uni-erlangen.de/research/sixte/simulation.php). I have only trested this on linux, I don't know if it would work on macOS.
+This module assumes that a working installation of SIXTE and SIMPUT is available in your system. See the installation instructions in the [SIXTE website](https://www.sternwarte.uni-erlangen.de/research/sixte/simulation.php). I have only trested this on linux, I don't know if it would work on macOS.
 
 
 Example
