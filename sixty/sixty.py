@@ -4,12 +4,16 @@ Simple python inteface for SIXTE/SIMPUT
 
 @author: A. Ruiz
 """
+import logging
 import os
 import subprocess
 from pathlib import Path
 
-from astropy import log
+logger = logging.getLogger(__name__)
 
+
+if "SIXTE" not in os.environ:
+    raise ImportError("SIXTE has not been initialized in your system!")
 
 # We have to redirect the HEADAS output, otherwise SIXTE tasks fail
 os.environ["HEADASPROMPT"] = "/dev/null"
@@ -24,6 +28,10 @@ _sixte_binaries = [f.name for f in _sixte_bin_dir.glob("*")]
 _sixte_binaries += [f.name for f in _simput_bin_dir.glob("*")]
 
 
+class SixtyError(RuntimeError):
+    pass
+
+
 def _check_task(task):
     if task not in _sixte_binaries:
         raise ValueError(f"Unknown task: {task}")
@@ -35,13 +43,14 @@ def _parse_arguments(kwargs):
     
 def _run_command(task, args):
     try:
-        log.info(f"Running {task} {' '.join(args)}")
+        logger.info(f"Running {task} {' '.join(args)}")
         output = subprocess.check_output([task] + args, stderr=subprocess.STDOUT)
-        log.info(output.decode())
+        logger.info(output.decode())
 
     except subprocess.CalledProcessError as e:
-        log.error(f"Task {task} failed with status {e.returncode}")
-        log.error(e.output.decode())
+        logger.error(f"Task {task} failed with status {e.returncode}")
+        logger.error(e.output.decode())
+        raise SixtyError("Error running SIXTE. Check log for details.")
 
 
 def run(task, **kwargs):
