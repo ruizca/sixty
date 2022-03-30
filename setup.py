@@ -10,7 +10,7 @@ setup(
     author_email="angel.ruizca@gmail.com",
     description="Python wrapper for SIXTE",
     long_description=long_description,
-    long_description_content_type="text/x-rst",
+    long_description_content_type="text/markdown",
     url="https://github.com/ruizca/sixty",
     packages=["sixty"],
     package_dir={"sixty": "sixty"},
